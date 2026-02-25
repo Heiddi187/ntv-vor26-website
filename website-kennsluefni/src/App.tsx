@@ -1,6 +1,8 @@
 import { useState } from 'react'
-
 import './App.css'
+import { Input } from './components/Input'
+import { MyCard } from './components/ui/MyCard'
+
 
 function App() {
   const [myName, setMyName] = useState('Heiddi')
@@ -11,23 +13,21 @@ function App() {
 
   return (
     <>
+      
       <h1>Hello website</h1>
-      <div>myName</div>
+      <div>my name and email</div>
       <div>{myName} {email}</div>
-        <input 
-          type="text"
-          value={myName}
-          //onChange={(e) => setMyName(e.target.value)}
-          onChange={(e) => handleChange(e)} 
-        />
-        <input 
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)} 
-        />
-        <button onClick={() => alert('submitted: '+email)}>Submit</button>
-      <p>Not copywrited by me</p>
-    </>
+      <Input value={myName} onChange={handleChange} />
+      <Input value={email} onChange={(e) => setEmail(e.target.value)} />
+      <button style={{color: 'white'}} onClick={() => alert('submitted: '+email)}>Submit</button>
+
+      <div>
+      {/* Card component */}
+      <div>Card</div>
+        <MyCard />
+      </div>
+      <p className='footer-note'>Not copywrited by me</p> // til að setja neðst á síðuna. gera classname og bæta við í css skrá. og svo setja className í p tagið
+      </>
   )
 }
 

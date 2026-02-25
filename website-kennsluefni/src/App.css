@@ -40,3 +40,10 @@
 .read-the-docs {
   color: #888;
 }
+
+.footer-note {
+  position: fixed;
+  bottom: 12px;
+  right: 12px;
+  
+}
