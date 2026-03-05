@@ -78,21 +78,22 @@ export function MyForm() {
                     <FieldDescription>
                         Ripe or fresh?
                     </FieldDescription>
-                    <RadioGroup defaultValue="Ripeness" className="w-fit">
+                    <RadioGroup defaultValue="Ripe" className="w-fit">
                         <div className="flex gap-3">
-                            <RadioGroupItem value="Ripe" id="r1" />
+                            <RadioGroupItem className="bg-white" value="Ripe" id="r1" />
                             <Label htmlFor="Ripe">Ripe</Label>
-                            <RadioGroupItem value="Fresh" id="r2" />
+                            <RadioGroupItem className="bg-white" value="Fresh" id="r2" />
                             <Label htmlFor="Fresh">Fresh</Label>
                         </div>
                     </RadioGroup>
                 </FieldGroup>
 
                 <div className="space-y-2">
-                    <FieldLabel>Extras</FieldLabel>
+                    <FieldLabel>Would you like:</FieldLabel>
                     <div className="flex gap-6">
                         <div className="flex items-center gap-2">
-                        <Checkbox
+                        <Checkbox 
+                            className="bg-white"
                             id="newsletter"
                             checked={newsletter}
                             onCheckedChange={(value) => setNewsletter(!!value)}
@@ -102,6 +103,7 @@ export function MyForm() {
 
                         <div className="flex items-center gap-2">
                         <Checkbox
+                            className="bg-white"
                             id="promotions"
                             checked={promotions}
                             onCheckedChange={(value) => setPromotions(!!value)}
@@ -111,7 +113,7 @@ export function MyForm() {
                     </div>
                 </div>
 
-                <Button className="bg-white hover:bg-green-200" type='submit' />
+                <Button className="h-3 w-3 bg-white hover:bg-green-200" type='submit' />
             </form>
         </Card>
     )

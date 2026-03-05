@@ -12,7 +12,7 @@ function App() {
         {/* Card component */}
         <div>Card</div>
         <MyCard />
-        <MyCard></MyCard>
+        {/* <MyCard></MyCard> */}
         <MyForm />
       </div>
       <p className="footer-note">Not copywrited by me</p>{" "}
