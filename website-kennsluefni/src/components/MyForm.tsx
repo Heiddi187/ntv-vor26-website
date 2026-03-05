@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Input } from "./Input"
 import { Card, CardHeader, CardTitle } from "./ui/card";
 import { Field, FieldGroup, FieldLabel, FieldDescription, FieldSet } from "./ui/field";
@@ -14,17 +14,25 @@ export function MyForm() {
     const [myEmail, setMyEmail] = useState('');
     const [myPhoneNumber, setMyPhoneNumber] = useState('')
     const [selectedFruit, setSelectedFruit] = useState('')
+    const [radioButton, setRadioButton] = useState<string | null>(null);
     const myName = `${firstName} ${lastName}`;
     const [newsletter, setNewsletter] = useState(false)
     const [promotions, setPromotions] = useState(false)
 
+    const firstNameRef = useRef('');
+    // const onSubmit = () => {
+    //     window.alert(firstNameRef.current)
+    // }
+
     return (
-        <Card className="bg-gray-100 msx-w-md mx-auto mt-10 shadow-lg">
+        <Card className="bg-gray-200 msx-w-md mx-auto mt-10 shadow-lg">
             <CardHeader>
                 <CardTitle>My Form</CardTitle>
+                <p>FirstNameRefValue: {firstNameRef.current}</p>
             </CardHeader>
 
             <form className="space-y-6 p-6" onSubmit={(e) => {
+                // onSubmit
                 e.preventDefault()
                 window.alert(`${myName} just placed an order for ${selectedFruit}
                     \nWe'll send confirmation to ${myEmail} & ${myPhoneNumber}`)
@@ -78,7 +86,9 @@ export function MyForm() {
                     <FieldDescription>
                         Ripe or fresh?
                     </FieldDescription>
-                    <RadioGroup defaultValue="Ripe" className="w-fit">
+                    <RadioGroup defaultValue="Ripe" className="w-fit" onValueChange={(e) => {
+                        setRadioButton(e)
+                    }}>
                         <div className="flex gap-3">
                             <RadioGroupItem className="bg-white" value="Ripe" id="r1" />
                             <Label htmlFor="Ripe">Ripe</Label>
@@ -112,9 +122,17 @@ export function MyForm() {
                         </div>
                     </div>
                 </div>
-
-                <Button className="h-3 w-3 bg-white hover:bg-green-200" type='submit' />
+           
+                <div>
+                    <Button
+                        className="border-black border w-1/2 bg-white hover:bg-green-200 rounded-2xl uppercase py-3 text-center"
+                        type="submit"
+                    >
+                        Submit
+                    </Button>
+                </div>                
             </form>
+
         </Card>
     )
 }
