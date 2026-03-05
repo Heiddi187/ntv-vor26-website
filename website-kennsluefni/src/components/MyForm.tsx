@@ -7,6 +7,7 @@ import { Button } from "./Button";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { Checkbox } from "./ui/checkbox";
+import { json } from "stream/consumers";
 
 export function MyForm() {
     const [firstName, setFirstName] = useState('');
@@ -20,9 +21,9 @@ export function MyForm() {
     const [promotions, setPromotions] = useState(false)
 
     const firstNameRef = useRef('');
-    // const onSubmit = () => {
-    //     window.alert(firstNameRef.current)
-    // }
+    const onSubmit = () => {
+        window.alert(firstNameRef.current)
+    }
 
     return (
         <Card className="bg-gray-200 msx-w-md mx-auto mt-10 shadow-lg">
@@ -32,10 +33,11 @@ export function MyForm() {
             </CardHeader>
 
             <form className="space-y-6 p-6" onSubmit={(e) => {
-                // onSubmit
+                onSubmit
                 e.preventDefault()
-                window.alert(`${myName} just placed an order for ${selectedFruit}
-                    \nWe'll send confirmation to ${myEmail} & ${myPhoneNumber}`)
+                // window.alert(`${myName} just placed an order for ${selectedFruit}
+                //     \nWe'll send confirmation to ${myEmail} & ${myPhoneNumber}`)
+                window.alert(JSON.stringify(firstNameRef.current))
                 }}>
 
                 <div className="space-y-2">
