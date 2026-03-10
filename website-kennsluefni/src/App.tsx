@@ -1,6 +1,7 @@
 import "./App.css";
 import { MyCard } from "./components/MyCard";
 import { MyForm } from "./components/MyForm";
+import { MyForm2 } from './components/MyForm2';
 
 function App() {
   
@@ -11,9 +12,10 @@ function App() {
       <div>
         {/* Card component */}
         <div>Card</div>
-        <MyCard />
+        {/* <MyCard /> */}
         {/* <MyCard></MyCard> */}
-        <MyForm />
+        {/* <MyForm /> */}
+        <MyForm2 />
       </div>
       <p className="footer-note">Not copywrited by me</p>{" "}
       {/* til að setja neðst á síðuna. gera classname og bæta við í css skrá. og svo setja className í p tagið*/}

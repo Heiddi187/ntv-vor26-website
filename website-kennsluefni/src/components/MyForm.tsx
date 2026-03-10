@@ -7,7 +7,6 @@ import { Button } from "./Button";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { Checkbox } from "./ui/checkbox";
-import { json } from "stream/consumers";
 
 export function MyForm() {
     const [firstName, setFirstName] = useState('');
