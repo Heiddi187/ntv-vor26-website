@@ -19,6 +19,7 @@ import { Button } from "./Button";
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import useDebounce from "@/hooks/useDebounce";
+import { InputField } from "@/features/form/InputField";
 
 type FormValuesType = {
     firstName: string
@@ -109,61 +110,41 @@ export function Form() {
                 >
                     <FieldSet>
                         <FieldGroup>
-                            <Field>
+                            {/* <Field>            ---- og sama fyrir lastname, email, simanr ---- 
                                 <p className="text-white">Search term: {debouncedSearchTerm}</p>
                                 <Input
-                                    className="bg-white"
-                                    id="firstName"
-                                    autoComplete="off"
-                                    placeholder="Gunnsteinn"
-                                    // TODO: Set values to all input fields in the form
-                                    value={values.firstName}
-                                    onChange={(e) => {
-                                        onInputChange('firstName', e.target.value)
+                                className="bg-white"
+                                id="firstName"
+                                autoComplete="off"
+                                placeholder="Gunnsteinn"
+                                // TODO: Set values to all input fields in the form
+                                value={values.firstName}
+                                onChange={(e) => {
+                                    onInputChange('firstName', e.target.value)
                                     }}
-                                />
-                            </Field>
-                            <Field>
-                                <Input
-                                    className="bg-white"
-                                    id="lastName"
-                                    autoComplete="off"
-                                    placeholder="Skulason"
-                                    onChange={(e) => {
-                                        onInputChange('lastName', e.target.value)
-                                    }}
-                                />
-                            </Field>
-                            <Field>
-                                <Input
-                                    className="bg-white"
-                                    id="email"
-                                    disabled
-                                    autoComplete="off"
-                                    type="email"
-                                    placeholder="asdf@ntv.is"
-                                    onChange={(e) => {
-                                        onInputChange('email', e.target.value)
-                                    }}
-                                />
-                            </Field>
-                            <Field>
-                                <Input
-                                    className="bg-white"
-                                    id="mobileNumber"
-                                    autoComplete="off"
-                                    type="number"
-                                    placeholder="Mobile number"
-                                    onChange={(e) => {
-                                        onInputChange('mobileNumber', e.target.value)
-                                    }}
-                                />
-                            </Field>
+                                    />
+                                    </Field> */}
+                            <InputField
+                                value={values.firstName}
+                                onChange={(e) => onInputChange('firstName', e.target.value)}
+                            />
+                            <InputField
+                                value={values.lastName}
+                                onChange={(e) => onInputChange('lastName', e.target.value)}
+                            />
+                            <InputField
+                                value={values.email}
+                                onChange={(e) => onInputChange('email', e.target.value)}
+                            />
+                            <InputField
+                                value={values.mobileNumber}
+                                onChange={(e) => onInputChange('mobileNumber', e.target.value)}
+                            />
                         </FieldGroup>
                         <FieldGroup>
                             <Select
                                 onValueChange={(e) => {
-                                    onInputChange('mobileNumber', e)
+                                    onInputChange('selectedFruit', e)
                                 }}
                             >
                                 <SelectTrigger className="w-full bg-white" >
