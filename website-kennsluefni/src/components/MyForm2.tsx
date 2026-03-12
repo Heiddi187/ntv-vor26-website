@@ -22,77 +22,78 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import { Checkbox } from "./ui/checkbox";
 import useDebounce from "@/hooks/useDebounce";
+import { useFormData } from "@/features/form/useFormData";
 
-type FormValuesType = {
-   firstName: string;
-   lastName: string;
-   email: string;
-   phoneNumber: string;
-   selectedFruit: string;
-   radioButton: string | null;
-};
+
 
 export function MyForm2() {
    const [newsletter, setNewsletter] = useState(false);
    const [promotions, setPromotions] = useState(false);
 
-   const dataRef = useRef<FormValuesType>({
-      firstName: "",
-      email: "",
-      lastName: "",
-      phoneNumber: "",
-      selectedFruit: "",
-      radioButton: null,
-   });
+   const {
+        defaultValues,
+        onInputChange,
+        onSubmit,
+        onLoad
+    } = useFormData();
 
-   const [defaultValues, setDefaultValues] = useState<FormValuesType>({
-      firstName: "",
-      email: "",
-      lastName: "",
-      phoneNumber: "",
-      selectedFruit: "",
-      radioButton: null,
-   });
+//    const dataRef = useRef<FormValuesType>({
+//       firstName: "",
+//       email: "",
+//       lastName: "",
+//       phoneNumber: "",
+//       selectedFruit: "",
+//       radioButton: null,
+//    });
+
+//    const [defaultValues, setDefaultValues] = useState<FormValuesType>({
+//       firstName: "",
+//       email: "",
+//       lastName: "",
+//       phoneNumber: "",
+//       selectedFruit: "",
+//       radioButton: null,
+//    });
 
    const firstNameRef = useRef("");
 
-   const onSubmit = () => {
-      const { firstName, email } = dataRef.current;
-      localStorage.setItem(email, JSON.stringify(dataRef.current));
-      window.alert(`Hello ${firstName}, email address ${email} `);
-   };
+//    const onSubmit = () => {
+//       const { firstName, email } = dataRef.current;
+//       localStorage.setItem(email, JSON.stringify(dataRef.current));
+//       window.alert(`Hello ${firstName}, email address ${email} `);
+//    };
 
    const loadEmailRef = useRef<HTMLInputElement>(null);
 
    const [emailKey, setEmailKey] = useState<string | null>(null);
 
-   const onLoad = useCallback(() => {
-      if (loadEmailRef.current && loadEmailRef.current.value) {
-            const loadedEmail = loadEmailRef.current.value;
-            const localStorageValue = localStorage.getItem(
-            loadEmailRef.current?.value,
-            );
-            if (localStorageValue) {
-                const parsedLocalStorageValue: FormValuesType =
-                JSON.parse(localStorageValue);
-                window.alert(parsedLocalStorageValue.firstName);
-                loadEmailRef.current.value = "";
-                setDefaultValues(parsedLocalStorageValue);
-                setEmailKey(loadedEmail);
-            } else {
-                window.alert("Email not found");
-            }
-        } else {
-            window.alert("A bug was found");
-        }
-    }, []);
+//    const onLoad = useCallback(() => {
+//       if (loadEmailRef.current && loadEmailRef.current.value) {
+//             const loadedEmail = loadEmailRef.current.value;
+//             const localStorageValue = localStorage.getItem(
+//             loadEmailRef.current?.value,
+//             );
+//             if (localStorageValue) {
+//                 const parsedLocalStorageValue: FormValuesType =
+//                 JSON.parse(localStorageValue);
+//                 window.alert(parsedLocalStorageValue.firstName);
+//                 loadEmailRef.current.value = "";
+//                 setDefaultValues(parsedLocalStorageValue);
+//                 setEmailKey(loadedEmail);
+//             } else {
+//                 window.alert("Email not found");
+//             }
+//         } else {
+//             window.alert("A bug was found");
+//         }
+//     }, []);
 
-   const onInputChange = useCallback(
-      (key: keyof FormValuesType, value: string) => {
-         dataRef.current[key] = value;
-      },
-      [],
-   );
+//    const onInputChange = useCallback(
+//       (key: keyof FormValuesType, value: string) => {
+//          dataRef.current[key] = value;
+//       },
+//       [],
+//    );
 
    const [searchTerm, setSearchTerm] = useState("");
 
@@ -315,7 +316,7 @@ export function MyForm2() {
             <form
                onSubmit={(e) => {
                   e.preventDefault();
-                  onLoad();
+                  onLoad(loadEmailRef.current?.value || "");
                }}
                className="w-full"
             >

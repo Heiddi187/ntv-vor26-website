@@ -1,4 +1,4 @@
-import type { CartItem } from "@/features/cart/cart.js";
+import type { CartItem } from "@/shared/types";
 import { formatPrice } from "@/shared/utils/formatPrice.js";
 import { Button } from "../../shared/components/Button.js";
 

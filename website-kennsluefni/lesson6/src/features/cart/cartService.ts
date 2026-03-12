@@ -1,4 +1,4 @@
-import type { CartItem } from "@/features/cart/cart";
+import type { CartItem } from "@/shared/types";
 
 const storageKey = "cart";
 
