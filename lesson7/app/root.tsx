@@ -1,0 +1,51 @@
+import type { LinksFunction } from "@remix-run/node";
+import {
+   Links,
+   Meta,
+   Outlet,
+   Scripts,
+   ScrollRestoration,
+} from "@remix-run/react";
+import { ThemeProvider } from "./context/ThemeContext";
+import { CounterProvider } from "./context/CounterContext";
+import appStyles from "./app.css?url";
+
+export const links: LinksFunction = () => [
+   { rel: "stylesheet", href: appStyles },
+];
+
+export function meta() {
+   return [
+      { title: "Remix Theme App" },
+      {
+         name: "description",
+         content: "Simple Remix app with light and dark theme",
+      },
+   ];
+}
+
+export default function App() {
+  
+   return (
+      <html lang="en" suppressHydrationWarning>
+         <head>
+            <meta charSet="utf-8" />
+            <meta
+               name="viewport"
+               content="width=device-width, initial-scale=1"
+            />
+            <Meta />
+            <Links />
+         </head>
+         <body>
+            <ThemeProvider>
+               <CounterProvider>
+                  <Outlet />
+                  <ScrollRestoration />
+                  <Scripts />
+               </CounterProvider>
+            </ThemeProvider>
+         </body>
+      </html>
+   );
+}
