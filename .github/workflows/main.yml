@@ -16,6 +16,6 @@ jobs:
           cache: npm
           cache-dependency-path: lesson8/package-lock.json
       - run: npm ci
-        working-directory: lesson8
+        working-directory: solutions/lesson8
       - run: npm run lint
-        working-directory: lesson8
+        working-directory: solutions/lesson8
