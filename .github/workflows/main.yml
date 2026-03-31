@@ -19,3 +19,5 @@ jobs:
         working-directory: solutions/lesson8
       - run: npm run lint
         working-directory: solutions/lesson8
+      - run: npm run test
+        working-directory: solutions/lesson8
