@@ -17,3 +17,29 @@ test('Add product to set quantity 1', () => {
 
   expect(result.current.items[0].quantity).toBe(1);
 })
+
+test('add same product twice, qty is 2', () => {
+  const { result } = renderHook(() => useCartStore());
+  act(() => {
+    result.current.addToCart(mockProduct);
+  });
+
+  expect(result.current.items[0].quantity).toBe(2);
+})
+
+test('remove item, cart should be empty', () => {
+  const { result } = renderHook(() => useCartStore());
+  act(() => {
+    result.current.removeItem('1');
+  });
+
+  expect(result.current.items.length).toBe(0);
+})
+
+test.todo('cart calcs correctly', () => {
+  //
+})
+
+test.todo('', () => {
+  //
+})
