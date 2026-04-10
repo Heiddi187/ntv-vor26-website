@@ -7,7 +7,6 @@ type TaskListProps = {
 }
 
 const TaskList = ({ tasks, deleteTask }: TaskListProps) => {
-    //const [toggleTask, set]
     if (tasks.length === 0) {
         return (
             <p className="text-center text-gray-500">

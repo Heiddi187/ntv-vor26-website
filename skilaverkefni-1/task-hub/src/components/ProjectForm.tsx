@@ -24,7 +24,7 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
       tasks: [],
    });
 
-   const [isFormVisible, setIsFormVisible] = useState(true);
+   const [isFormVisible, setIsFormVisible] = useState(false);
 
    const handleChange = (
       e: React.ChangeEvent<
@@ -68,7 +68,7 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
                />
                <SelectInput
                   label="Category"
-                  name="category"
+                  title="category"
                   value={formData.category}
                   onChange={handleChange}
                   options={[
@@ -79,7 +79,7 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
                />
                <TextAreaInput
                   label="Description"
-                  name="description"
+                  title="description"
                   value={formData.description}
                   onChange={handleChange}
                />

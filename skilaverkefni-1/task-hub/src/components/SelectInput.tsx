@@ -7,19 +7,19 @@ type Option = {
 
 type SelectInputProps = {
   label: string
-  name: string
+  title: string
   value: string
   onChange: React.ChangeEventHandler<HTMLSelectElement>
   options: Option[]
 }
-const SelectInput = ({ label, name, value, onChange, options }: SelectInputProps) => {
+const SelectInput = ({ label, title, value, onChange, options }: SelectInputProps) => {
     return ( 
         <div className="mb-4">
-                  <label htmlFor={name} className="block font-semibold">
+                  <label htmlFor={title} className="block font-semibold">
                      {label}
                   </label>
                   <select
-                     name={name}
+                     title={title}
                      className="w-full p-2 border rounded-lg"
                      value={value}
                      onChange={onChange}

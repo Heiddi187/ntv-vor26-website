@@ -5,6 +5,7 @@ import ProjectForm from "./components/ProjectForm";
 import TaskForm from "./components/TaskForm";
 import TaskList from "./components/TaskList";
 import type { TaskType } from "./components/TaskType";
+import ProjectList from "./components/ProjectList";
 
 const App = () => {
    // Projects //
@@ -51,6 +52,7 @@ const App = () => {
    return (
     <div className="max-w-lg mx-auto mt-14 p-6 bg-gray-100 rounded-lg shadow-lg">
       <ProjectForm setProjects={setProjects}></ProjectForm>
+      <ProjectList projects={projects} deleteProject={deleteProject}></ProjectList>
       <TaskList tasks={tasks} deleteTask={deleteTask}></TaskList>
     </div>
    )
