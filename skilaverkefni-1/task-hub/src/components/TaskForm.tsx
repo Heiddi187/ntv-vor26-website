@@ -22,7 +22,7 @@ export const TaskForm = ({ setTasks }: TaskFormProps) => {
       completed: false
    });
 
-   const [isFormVisible, setIsFormVisible] = useState(true);
+   // const [isFormVisible, setIsFormVisible] = useState(true);
 
    const handleChange = (
       e: React.ChangeEvent<
@@ -54,42 +54,37 @@ export const TaskForm = ({ setTasks }: TaskFormProps) => {
 
    return (
       <>
-         <button
-            className="w-full bg-gray-100 border text-blue-800 py-2 rounded-lg cursor-pointer hover:bg-blue-300 border-blue-400"
-            onClick={() => setIsFormVisible(!isFormVisible)}
-         >
-            {isFormVisible ? "Hide Form" : "Add New Task"}
-         </button>
-         {isFormVisible && (
+         
             <form onSubmit={handleSubmit} className="mb-6">
-               {/* <ProjectInput
-                  label="Title"
-                  title="title"
+               <input
+                  name="Title"
+                  placeholder="task title"
                   value={formData.title}
                   onChange={handleChange}
                />
-               <SelectInput
-                  label="Category"
-                  name="category"
-                  value={formData.category}
+               <select
+                  name="Category"
+                  value={formData.priority}
                   onChange={handleChange}
-                  options={[
-                     { value: "Work", label: "Work" },
-                     { value: "Personal", label: "Personal" },
-                     { value: "Ideas", label: "Ideas" },
-                  ]}
-               />
-               <TextAreaInput
+                  >
+                     <option value="low">Low</option>
+                     <option value="medium">Medium</option>
+                     <option value="high">High</option>
+                  </select>
+               {/* <TextAreaInput
                   label="Description"
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
                /> */}
+               description?: 
+               assignTo?: 
+               completed: 
                <button className="w-full bg-blue-400 text-white py-2 rounded-lg cursor-pointer hover:bg-blue-600">
-                  Add Project
+                  Add Task
                </button>
             </form>
-         )}
+        
       </>
    );
 };

@@ -54,6 +54,7 @@ const App = () => {
       <ProjectForm setProjects={setProjects}></ProjectForm>
       <ProjectList projects={projects} deleteProject={deleteProject}></ProjectList>
       <TaskList tasks={tasks} deleteTask={deleteTask}></TaskList>
+      <TaskForm setTasks={setTasks}></TaskForm>
     </div>
    )
 };
