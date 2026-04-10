@@ -1,27 +1,25 @@
 import { useState } from "react";
-import type { ProjectType } from "./ProjectType";
 import type { TaskType } from "./TaskType";
-import ProjectInput from "./ProjectInput";
-import SelectInput from "./SelectInput";
-import TextAreaInput from "./TextAreaInput";
 
 type FormDataType = {
    title: string;
-   category: string;
+   priority: "low" | "medium" | "high";
    description: string;
-   tasks: TaskType[];
+   assignedTo: string
+   completed: boolean
 };
 
-type ProjectFormProps = {
-   setProjects: React.Dispatch<React.SetStateAction<ProjectType[]>>;
+type TaskFormProps = {
+   setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
 };
 
-export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
+export const TaskForm = ({ setTasks }: TaskFormProps) => {
    const [formData, setFormData] = useState<FormDataType>({
       title: "",
-      category: "",
+      priority: "medium",
       description: "",
-      tasks: [],
+      assignedTo: "",
+      completed: false
    });
 
    const [isFormVisible, setIsFormVisible] = useState(true);
@@ -31,22 +29,26 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
       >,
    ) => {
+        const { name, value, type } = e.target;
       setFormData({
          ...formData,
-         [e.target.title]: e.target.value,
+         [name]: type === "checkbox"
+            ? (e.target as HTMLInputElement).checked
+            : value,
       });
    };
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (!formData.title.trim()) return;
-      const newProject: ProjectType = { id: Date.now(), ...formData };
-      setProjects((projects) => [newProject, ...projects]);
+      const newTask: TaskType = { id: Date.now(), ...formData };
+      setTasks((tasks) => [newTask, ...tasks]);
       setFormData({
          title: "",
-         category: "",
+         priority: "medium",
          description: "",
-         tasks: [],
+         assignedTo: "",
+         completed: false
       });
    };
 
@@ -56,11 +58,11 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
             className="w-full bg-gray-100 border text-blue-800 py-2 rounded-lg cursor-pointer hover:bg-blue-300 border-blue-400"
             onClick={() => setIsFormVisible(!isFormVisible)}
          >
-            {isFormVisible ? "Hide Form" : "Add New Project"}
+            {isFormVisible ? "Hide Form" : "Add New Task"}
          </button>
          {isFormVisible && (
             <form onSubmit={handleSubmit} className="mb-6">
-               <ProjectInput
+               {/* <ProjectInput
                   label="Title"
                   title="title"
                   value={formData.title}
@@ -82,7 +84,7 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
                   name="description"
                   value={formData.description}
                   onChange={handleChange}
-               />
+               /> */}
                <button className="w-full bg-blue-400 text-white py-2 rounded-lg cursor-pointer hover:bg-blue-600">
                   Add Project
                </button>
@@ -92,4 +94,4 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
    );
 };
 
-export default ProjectForm;
+export default TaskForm;

@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import type { ProjectType } from "./components/ProjectType";
+import ProjectForm from "./components/ProjectForm";
+import TaskForm from "./components/TaskForm";
+import TaskList from "./components/TaskList";
+import type { TaskType } from "./components/TaskType";
 
 const App = () => {
+   // Projects //
    const [projects, setProjects] = useState<ProjectType[]>(() => {
       try {
          const storedProjects = localStorage.getItem("projects");
@@ -25,9 +30,28 @@ const App = () => {
       }
    };
 
+   // Tasks //
+
+   const [tasks, setTasks] = useState<TaskType[]>(() => {
+      try {
+         const storedTasks = localStorage.getItem("tasks");
+         return storedTasks ? JSON.parse(storedTasks) : [];
+      } catch {
+         return [];
+      }
+   })
+   
+   const deleteTask = (id: number) => {
+      const conformDelete = window.confirm('Do you want to delete this task?')
+      if (conformDelete) {
+         setTasks(tasks.filter((task) => task.id !== id))
+      }
+   }
+
    return (
-    <div>
-      <h1>Hello</h1>
+    <div className="max-w-lg mx-auto mt-14 p-6 bg-gray-100 rounded-lg shadow-lg">
+      <ProjectForm setProjects={setProjects}></ProjectForm>
+      <TaskList tasks={tasks} deleteTask={deleteTask}></TaskList>
     </div>
    )
 };
