@@ -5,6 +5,7 @@ import TaskForm from "./TaskForm";
 import Task from "./Task";
 import { useProjectStore } from "../store/useProjectStore";
 import { useTaskFilters } from "../hooks/useTaskFilters";
+import { useToggle } from "../hooks/useToggle";
 
 type ProjectProps = {
    project: ProjectType;
@@ -33,7 +34,8 @@ const Project = ({ project, deleteProject }: ProjectProps) => {
    // const toggleTaskStatus = useProjectStore((state) => state.toggleTaskStatus)
    // const editTask = useProjectStore((state) => state.editTask)
 
-   const [showTaskForm, setShowTaskForm] = useState(false);
+   // const [showTaskForm, setShowTaskForm] = useState(false);
+   const { value: showTaskForm, toggle: toggleTaskForm} = useToggle()
 
    // nýttt
 
@@ -214,8 +216,8 @@ const Project = ({ project, deleteProject }: ProjectProps) => {
                </div>
             </div>
          ))} */}
-         <button onClick={() => setShowTaskForm((prev) => !prev)}>
-            Add Task
+         <button onClick={toggleTaskForm} className="w-full bg-blue-400 text-white py-2 rounded-lg cursor-pointer hover:bg-blue-600">
+            Add Tasks
          </button>
          {showTaskForm && (
             <TaskForm addTask={(task) => addTask(project.id, task)} />
