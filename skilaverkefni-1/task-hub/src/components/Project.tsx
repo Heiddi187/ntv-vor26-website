@@ -4,6 +4,7 @@ import type { TaskType } from "./TaskType";
 import TaskForm from "./TaskForm";
 import Task from "./Task";
 import { useProjectStore } from "../store/useProjectStore";
+import { useTaskFilters } from "../hooks/useTaskFilters";
 
 type ProjectProps = {
    project: ProjectType;
@@ -12,74 +13,88 @@ type ProjectProps = {
 };
 
 const Project = ({ project, deleteProject }: ProjectProps) => {
-    const addTask = useProjectStore((s) => s.addTask)
+   const [search, setSearch] = useState("");
+   const [priorityFilter, setPriorityFilter] = useState<
+      "all" | "low" | "medium" | "high"
+   >("all");
+   const [statusFilter, setStatusFilter] = useState<
+      "all" | "completed" | "active"
+   >("all");
 
-    // const deleteTask = useProjectStore((state) => state.deleteTask)
-    // const toggleTaskStatus = useProjectStore((state) => state.toggleTaskStatus)
-    // const editTask = useProjectStore((state) => state.editTask)
+   const filteredTasks = useTaskFilters(project.tasks, {
+      search,
+      priority: priorityFilter,
+      status: statusFilter,
+   });
+
+   const addTask = useProjectStore((s) => s.addTask);
+
+   // const deleteTask = useProjectStore((state) => state.deleteTask)
+   // const toggleTaskStatus = useProjectStore((state) => state.toggleTaskStatus)
+   // const editTask = useProjectStore((state) => state.editTask)
 
    const [showTaskForm, setShowTaskForm] = useState(false);
 
    // nýttt
 
-//    addTask(project.id, task);
-//    deleteTask(project.id, taskId);
-//    toggleTaskStatus(project.id, taskId);
-//    editTask(project.id, TaskEditForm, updates);
+   //    addTask(project.id, task);
+   //    deleteTask(project.id, taskId);
+   //    toggleTaskStatus(project.id, taskId);
+   //    editTask(project.id, TaskEditForm, updates);
 
-//    const addTask = (task: TaskType) => {
-//       const updatedProject = {
-//          ...project,
-//          tasks: [task, ...project.tasks],
-//       };
+   //    const addTask = (task: TaskType) => {
+   //       const updatedProject = {
+   //          ...project,
+   //          tasks: [task, ...project.tasks],
+   //       };
 
-//       setProjects((prev) =>
-//          prev.map((p) => (p.id === project.id ? updatedProject : p)),
-//       );
-//    };
+   //       setProjects((prev) =>
+   //          prev.map((p) => (p.id === project.id ? updatedProject : p)),
+   //       );
+   //    };
 
-//    const deleteTask = (taskId: number) => {
-//       setProjects((prev) =>
-//          prev.map((p) =>
-//             p.id === project.id
-//                ? {
-//                     ...p,
-//                     tasks: p.tasks.filter((t) => t.id !== taskId),
-//                  }
-//                : p,
-//          ),
-//       );
-//    };
+   //    const deleteTask = (taskId: number) => {
+   //       setProjects((prev) =>
+   //          prev.map((p) =>
+   //             p.id === project.id
+   //                ? {
+   //                     ...p,
+   //                     tasks: p.tasks.filter((t) => t.id !== taskId),
+   //                  }
+   //                : p,
+   //          ),
+   //       );
+   //    };
 
-//    const taskStatus = (taskId: number) => {
-//       setProjects((prev) =>
-//          prev.map((p) =>
-//             p.id === project.id
-//                ? {
-//                     ...p,
-//                     tasks: p.tasks.map((t) =>
-//                        t.id === taskId ? { ...t, completed: !t.completed } : t,
-//                     ),
-//                  }
-//                : p,
-//          ),
-//       );
-//    };
+   //    const taskStatus = (taskId: number) => {
+   //       setProjects((prev) =>
+   //          prev.map((p) =>
+   //             p.id === project.id
+   //                ? {
+   //                     ...p,
+   //                     tasks: p.tasks.map((t) =>
+   //                        t.id === taskId ? { ...t, completed: !t.completed } : t,
+   //                     ),
+   //                  }
+   //                : p,
+   //          ),
+   //       );
+   //    };
 
-//    const editTask = (taskId: number, updatedTask: Partial<TaskType>) => {
-//       setProjects((prev) =>
-//          prev.map((p) =>
-//             p.id === project.id
-//                ? {
-//                     ...p,
-//                     tasks: p.tasks.map((t) =>
-//                        t.id === taskId ? { ...t, ...updatedTask } : t,
-//                     ),
-//                  }
-//                : p,
-//          ),
-//       );
-//    };
+   //    const editTask = (taskId: number, updatedTask: Partial<TaskType>) => {
+   //       setProjects((prev) =>
+   //          prev.map((p) =>
+   //             p.id === project.id
+   //                ? {
+   //                     ...p,
+   //                     tasks: p.tasks.map((t) =>
+   //                        t.id === taskId ? { ...t, ...updatedTask } : t,
+   //                     ),
+   //                  }
+   //                : p,
+   //          ),
+   //       );
+   //    };
 
    return (
       <div className="border shadow-lg rounded-lg py-2 px-2">
@@ -96,19 +111,52 @@ const Project = ({ project, deleteProject }: ProjectProps) => {
          >
             Delete Project
          </button>
-         <div className="space-y-2 mt-2">
-         {project.tasks.map(task => (
-            <Task
-                key={task.id}
-                task={task}
-                projectId={project.id}
-                // deleteTask={deleteTask}
-                // taskStatus={taskStatus}
-                // editTask={editTask}
+
+         <div className="space-y-2 mt-3">
+            {/* 🔍 Search */}
+            <input
+               placeholder="Search tasks..."
+               value={search}
+               onChange={(e) => setSearch(e.target.value)}
+               className="border p-2 w-full"
             />
-         ))}
-        </div>
-         
+
+            {/* 🎯 Priority filter */}
+            <select
+               value={priorityFilter}
+               onChange={(e) => setPriorityFilter(e.target.value as "all" | "low" | "medium" | "high")}
+               className="border p-2 w-full"
+            >
+               <option value="all">All priorities</option>
+               <option value="low">Low</option>
+               <option value="medium">Medium</option>
+               <option value="high">High</option>
+            </select>
+
+            {/* ✅ Status filter */}
+            <select
+               value={statusFilter}
+               onChange={(e) => setStatusFilter(e.target.value as "all" | "active" | "completed")}
+               className="border p-2 w-full"
+            >
+               <option value="all">All tasks</option>
+               <option value="active">Active</option>
+               <option value="completed">Completed</option>
+            </select>
+         </div>
+         <div className="space-y-2 mt-2">
+            {filteredTasks.map((task) => (
+               <Task
+                  key={task.id}
+                  task={task}
+                  projectId={project.id}
+                  // deleteTask={deleteTask}
+                  // taskStatus={taskStatus}
+                  // editTask={editTask}
+               />
+            ))}
+         </div>
+
          {/* {project.tasks.map((task) => (
             <div
                key={task.id}
@@ -156,7 +204,9 @@ const Project = ({ project, deleteProject }: ProjectProps) => {
          <button onClick={() => setShowTaskForm((prev) => !prev)}>
             Add Task
          </button>
-         {showTaskForm && <TaskForm addTask={(task) => addTask(project.id, task)} />}
+         {showTaskForm && (
+            <TaskForm addTask={(task) => addTask(project.id, task)} />
+         )}
       </div>
    );
 };

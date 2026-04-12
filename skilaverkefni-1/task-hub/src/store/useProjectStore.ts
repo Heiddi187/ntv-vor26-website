@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { ProjectType } from "../components/ProjectType";
 import type { TaskType } from "../components/TaskType";
+import { ProjectsSchema } from "../schema/projectSchema";
 
 type ProjectStore = {
    projects: ProjectType[];
@@ -83,6 +84,19 @@ export const useProjectStore = create<ProjectStore>()(
       }),
       {
          name: "project-storage",
+
+         migrate: (persistedState) => {
+            try {
+               const state = persistedState as { projects?: unknown };
+
+               const parsed = ProjectsSchema.parse(state?.projects ?? []);
+
+               return { projects: parsed };
+            } catch (error) {
+               console.error("Invalid localStorage data, resetting...", error);
+               return { projects: [] };
+            }
+         },
       },
    ),
 );
