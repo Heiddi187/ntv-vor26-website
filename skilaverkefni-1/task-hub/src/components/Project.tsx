@@ -17,6 +17,9 @@ const Project = ({ project, deleteProject }: ProjectProps) => {
             <p>
                 <strong>Description: </strong> {project.description}
             </p>
+            {project.tasks.map(task => (
+                        <div key={task.id}>{task.title}</div>
+                    ))}
             <button onClick={() => deleteProject(project.id)} className="mt-3 text-red-500">
                 Delete Project
             </button>

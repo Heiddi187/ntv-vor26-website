@@ -22,7 +22,9 @@ const ProjectsList = ({ projects, deleteProject }: ProjectListProps) => {
                     key={project.id}
                     project={project}
                     deleteProject={deleteProject}
-                />
+                >
+                    
+                </Project>
             ))}
         </div>
     )

@@ -2,19 +2,19 @@ import React from "react";
 
 type TextAreaInputProps = {
   label: string
-  title: string
+  name: string
   value: string
   onChange: React.ChangeEventHandler<HTMLTextAreaElement>
 }
 
-const TextAreaInput = ({ label, title, value, onChange }: TextAreaInputProps) => {
+const TextAreaInput = ({ label, name, value, onChange }: TextAreaInputProps) => {
     return ( 
         <div className="mb-4">
-                  <label htmlFor={title} className="block font-semibold">
+                  <label htmlFor={name} className="block font-semibold">
                      {label}
                   </label>
                   <textarea
-                     title={title}
+                     name={name}
                      className="w-full p-2 border rounded-lg"
                      value={value}
                      onChange={onChange}

@@ -10,7 +10,7 @@ type FormDataType = {
 };
 
 type TaskFormProps = {
-   setTasks: React.Dispatch<React.SetStateAction<TaskType[]>>;
+   setTasks: (task: TaskType) => void;
 };
 
 export const TaskForm = ({ setTasks }: TaskFormProps) => {
@@ -40,9 +40,16 @@ export const TaskForm = ({ setTasks }: TaskFormProps) => {
 
    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
       if (!formData.title.trim()) return;
-      const newTask: TaskType = { id: Date.now(), ...formData };
-      setTasks((tasks) => [newTask, ...tasks]);
+      
+      const newTask: TaskType = {
+         id: Date.now(),
+         ...formData
+      };
+
+      setTasks(newTask)
+
       setFormData({
          title: "",
          priority: "medium",
@@ -55,17 +62,20 @@ export const TaskForm = ({ setTasks }: TaskFormProps) => {
    return (
       <>
          
-            <form onSubmit={handleSubmit} className="mb-6">
+            <form onSubmit={handleSubmit} className="space-y-2 border p-3 rounded">
+               
                <input
-                  name="Title"
+                  name="title"
                   placeholder="task title"
                   value={formData.title}
                   onChange={handleChange}
+                  className="border p-2 w-full"
                />
                <select
-                  name="Category"
+                  name="category"
                   value={formData.priority}
                   onChange={handleChange}
+                  className="border p-2 w-full"
                   >
                      <option value="low">Low</option>
                      <option value="medium">Medium</option>
@@ -80,7 +90,7 @@ export const TaskForm = ({ setTasks }: TaskFormProps) => {
                description?: 
                assignTo?: 
                completed: 
-               <button className="w-full bg-blue-400 text-white py-2 rounded-lg cursor-pointer hover:bg-blue-600">
+               <button disabled={!formData.title.trim()} className="bg-blue-500 text-white px-3 py-1 rounded" type="submit">
                   Add Task
                </button>
             </form>

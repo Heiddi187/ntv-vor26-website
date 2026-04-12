@@ -2,21 +2,22 @@ import React from "react";
 
 type ProjectInputProps = {
     label: string
-    title: string
+    name: string
     value: string
     onChange: React.ChangeEventHandler<HTMLInputElement>
 }
 
-const ProjectInput = ({ label, title, value, onChange }: ProjectInputProps) => {
+const ProjectInput = ({ label, name, value, onChange }: ProjectInputProps) => {
     return (
         <div className="mb-4">
-            <label htmlFor={ title } className="block font-semibold">
+            <label htmlFor={ name } className="block font-semibold">
                 { label }
             </label>
             <input 
                 className="w-full p-2 border rounded-lg"
                 type="text"
-                title={title}
+                name={name}
+                id={name}
                 value={value}
                 onChange={onChange}
             />

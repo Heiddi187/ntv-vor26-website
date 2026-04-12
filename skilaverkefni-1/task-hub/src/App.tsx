@@ -33,28 +33,28 @@ const App = () => {
 
    // Tasks //
 
-   const [tasks, setTasks] = useState<TaskType[]>(() => {
-      try {
-         const storedTasks = localStorage.getItem("tasks");
-         return storedTasks ? JSON.parse(storedTasks) : [];
-      } catch {
-         return [];
-      }
-   })
+   // const [tasks, addTask] = useState<TaskType[]>(() => {
+   //    try {
+   //       const storedTasks = localStorage.getItem("tasks");
+   //       return storedTasks ? JSON.parse(storedTasks) : [];
+   //    } catch {
+   //       return [];
+   //    }
+   // })
    
-   const deleteTask = (id: number) => {
-      const conformDelete = window.confirm('Do you want to delete this task?')
-      if (conformDelete) {
-         setTasks(tasks.filter((task) => task.id !== id))
-      }
-   }
+   // const deleteTask = (id: number) => {
+   //    const conformDelete = window.confirm('Do you want to delete this task?')
+   //    if (conformDelete) {
+   //       addTask(tasks.filter((task) => task.id !== id))
+   //    }
+   // }
 
    return (
     <div className="max-w-lg mx-auto mt-14 p-6 bg-gray-100 rounded-lg shadow-lg">
       <ProjectForm setProjects={setProjects}></ProjectForm>
       <ProjectList projects={projects} deleteProject={deleteProject}></ProjectList>
-      <TaskList tasks={tasks} deleteTask={deleteTask}></TaskList>
-      <TaskForm setTasks={setTasks}></TaskForm>
+      {/* <TaskList tasks={tasks} deleteTask={deleteTask}></TaskList>
+      <TaskForm addTask={addTask}></TaskForm> */}
     </div>
    )
 };
