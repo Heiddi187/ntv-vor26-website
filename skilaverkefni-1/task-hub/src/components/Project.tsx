@@ -52,14 +52,14 @@ const Project = ({ project, deleteProject, setProjects }: ProjectProps) => {
       );
    };
 
-   const editTask = (taskId: number, newTitle: string) => {
+   const editTask = (taskId: number, updatedTask: Partial<TaskType>) => {
       setProjects((prev) =>
          prev.map((p) =>
             p.id === project.id
                ? {
                     ...p,
                     tasks: p.tasks.map((t) =>
-                       t.id === taskId ? { ...t, title: newTitle } : t,
+                       t.id === taskId ? { ...t, ...updatedTask } : t,
                     ),
                  }
                : p,
@@ -82,6 +82,7 @@ const Project = ({ project, deleteProject, setProjects }: ProjectProps) => {
          >
             Delete Project
          </button>
+         <div className="space-y-2 mt-2">
          {project.tasks.map(task => (
             <Task
                 key={task.id}
@@ -91,6 +92,8 @@ const Project = ({ project, deleteProject, setProjects }: ProjectProps) => {
                 editTask={editTask}
             />
          ))}
+        </div>
+         
          {/* {project.tasks.map((task) => (
             <div
                key={task.id}

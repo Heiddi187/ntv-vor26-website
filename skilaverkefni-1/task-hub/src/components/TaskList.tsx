@@ -5,7 +5,7 @@ type TaskListProps = {
     tasks: TaskType[]
     deleteTask: (id: number) => void
     taskStatus: (id: number) => void;
-    editTask: (id: number, newTitle: string) => void;
+    editTask: (id: number, updatedTask: Partial<TaskType>) => void;
 }
 
 const TaskList = ({ tasks, deleteTask, taskStatus, editTask }: TaskListProps) => {
