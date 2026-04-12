@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import type { TaskType } from "./TaskType";
+import TaskEditForm from "./TaskEditForm";
 
 type TaskProps = {
    task: TaskType;
@@ -18,91 +19,20 @@ const Task = ({ task, deleteTask, taskStatus, editTask }: TaskProps) => {
       setEditData(task);
    }, [task]);
 
-   const handleChange = (
-      e: React.ChangeEvent<
-         HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-      >,
-   ) => {
-      const { name, value, type } = e.target;
-
-      setEditData((prev) => ({
-         ...prev,
-         [name]:
-            type === "checkbox"
-               ? (e.target as HTMLInputElement).checked
-               : value,
-      }));
-   };
-
    const saveEdit = () => {
       editTask(task.id, editData);
       setIsEditing(false);
    };
 
    if (isEditing) {
-      return (
-         <div className="space-y-2 border rounded bg-gray-100">
-            <div>
-               <label className="text-sm font-semibold p-2">Title:</label>
-               <input
-                  name="title"
-                  value={editData.title}
-                  onChange={handleChange}
-                  className="border p-2 w-full"
-               />
-            </div>
-
-            <div>
-               <label className="text-sm font-semibold p-2">Priority:</label>
-               <select
-                  name="priority"
-                  value={editData.priority}
-                  onChange={handleChange}
-                  className="border p-2 w-full"
-               >
-                  <option value="low">Low</option>
-                  <option value="medium">Medium</option>
-                  <option value="high">High</option>
-               </select>
-            </div>
-
-            <div>
-               <label className="text-sm font-semibold p-2">Description:</label>
-               <textarea
-                  name="description"
-                  value={editData.description}
-                  onChange={handleChange}
-                  className="border p-2 w-full"
-               />
-            </div>
-
-            <div>
-               <label className="text-sm font-semibold p-2">Assigned to:</label>
-               <input
-                  name="assignedTo"
-                  value={editData.assignedTo}
-                  onChange={handleChange}
-                  className="border p-2 w-full"
-               />
-            </div>
-
-            <div className="flex gap-2">
-               <button
-                  onClick={saveEdit}
-                  className="bg-green-500 text-white px-2 py-1 rounded"
-               >
-                  Save
-               </button>
-
-               <button
-                  onClick={() => setIsEditing(false)}
-                  className="bg-gray-300 px-2 py-1 rounded"
-               >
-                  Cancel
-               </button>
-            </div>
-         </div>
-      );
+        return (
+            <TaskEditForm
+                editData={editData}
+                setEditData={setEditData}
+                onSave={saveEdit}
+                onCancel={() => setIsEditing(false)}
+            />
+        )
    }
 
    return (
@@ -153,22 +83,6 @@ const Task = ({ task, deleteTask, taskStatus, editTask }: TaskProps) => {
                   onClick={(e) => {
                      e.stopPropagation();
                      setIsEditing(true);
-
-                     // const newTitle = prompt("Edit title:", task.title);
-                     // if (!newTitle?.trim()) return;
-                     // editTask(task.id, { title: newTitle });
-
-                     // const newAssignedTo = prompt(
-                     //    "Edit Assigned to",
-                     //    task.assignedTo,
-                     // );
-                     // if (!newAssignedTo?.trim()) return;
-                     // editTask(task.id, { assignedTo: newAssignedTo });
-
-                     // const newDescription = prompt(
-                     //    "Edit description",
-                     //    task.description,
-                     // );
                   }}
                >
                   Edit Task
