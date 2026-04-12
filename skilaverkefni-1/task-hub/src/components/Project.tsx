@@ -3,69 +3,83 @@ import type { ProjectType } from "./ProjectType";
 import type { TaskType } from "./TaskType";
 import TaskForm from "./TaskForm";
 import Task from "./Task";
+import { useProjectStore } from "../store/useProjectStore";
 
 type ProjectProps = {
    project: ProjectType;
    deleteProject: (id: number) => void;
-   setProjects: React.Dispatch<React.SetStateAction<ProjectType[]>>;
+   // setProjects: React.Dispatch<React.SetStateAction<ProjectType[]>>;
 };
 
-const Project = ({ project, deleteProject, setProjects }: ProjectProps) => {
+const Project = ({ project, deleteProject }: ProjectProps) => {
+    const addTask = useProjectStore((s) => s.addTask)
+
+    // const deleteTask = useProjectStore((state) => state.deleteTask)
+    // const toggleTaskStatus = useProjectStore((state) => state.toggleTaskStatus)
+    // const editTask = useProjectStore((state) => state.editTask)
+
    const [showTaskForm, setShowTaskForm] = useState(false);
 
-   const addTask = (task: TaskType) => {
-      const updatedProject = {
-         ...project,
-         tasks: [task, ...project.tasks],
-      };
+   // nýttt
 
-      setProjects((prev) =>
-         prev.map((p) => (p.id === project.id ? updatedProject : p)),
-      );
-   };
+//    addTask(project.id, task);
+//    deleteTask(project.id, taskId);
+//    toggleTaskStatus(project.id, taskId);
+//    editTask(project.id, TaskEditForm, updates);
 
-   const deleteTask = (taskId: number) => {
-      setProjects((prev) =>
-         prev.map((p) =>
-            p.id === project.id
-               ? {
-                    ...p,
-                    tasks: p.tasks.filter((t) => t.id !== taskId),
-                 }
-               : p,
-         ),
-      );
-   };
+//    const addTask = (task: TaskType) => {
+//       const updatedProject = {
+//          ...project,
+//          tasks: [task, ...project.tasks],
+//       };
 
-   const taskStatus = (taskId: number) => {
-      setProjects((prev) =>
-         prev.map((p) =>
-            p.id === project.id
-               ? {
-                    ...p,
-                    tasks: p.tasks.map((t) =>
-                       t.id === taskId ? { ...t, completed: !t.completed } : t,
-                    ),
-                 }
-               : p,
-         ),
-      );
-   };
+//       setProjects((prev) =>
+//          prev.map((p) => (p.id === project.id ? updatedProject : p)),
+//       );
+//    };
 
-   const editTask = (taskId: number, updatedTask: Partial<TaskType>) => {
-      setProjects((prev) =>
-         prev.map((p) =>
-            p.id === project.id
-               ? {
-                    ...p,
-                    tasks: p.tasks.map((t) =>
-                       t.id === taskId ? { ...t, ...updatedTask } : t,
-                    ),
-                 }
-               : p,
-         ),
-      );
-   };
+//    const deleteTask = (taskId: number) => {
+//       setProjects((prev) =>
+//          prev.map((p) =>
+//             p.id === project.id
+//                ? {
+//                     ...p,
+//                     tasks: p.tasks.filter((t) => t.id !== taskId),
+//                  }
+//                : p,
+//          ),
+//       );
+//    };
+
+//    const taskStatus = (taskId: number) => {
+//       setProjects((prev) =>
+//          prev.map((p) =>
+//             p.id === project.id
+//                ? {
+//                     ...p,
+//                     tasks: p.tasks.map((t) =>
+//                        t.id === taskId ? { ...t, completed: !t.completed } : t,
+//                     ),
+//                  }
+//                : p,
+//          ),
+//       );
+//    };
+
+//    const editTask = (taskId: number, updatedTask: Partial<TaskType>) => {
+//       setProjects((prev) =>
+//          prev.map((p) =>
+//             p.id === project.id
+//                ? {
+//                     ...p,
+//                     tasks: p.tasks.map((t) =>
+//                        t.id === taskId ? { ...t, ...updatedTask } : t,
+//                     ),
+//                  }
+//                : p,
+//          ),
+//       );
+//    };
 
    return (
       <div className="border shadow-lg rounded-lg py-2 px-2">
@@ -87,9 +101,10 @@ const Project = ({ project, deleteProject, setProjects }: ProjectProps) => {
             <Task
                 key={task.id}
                 task={task}
-                deleteTask={deleteTask}
-                taskStatus={taskStatus}
-                editTask={editTask}
+                projectId={project.id}
+                // deleteTask={deleteTask}
+                // taskStatus={taskStatus}
+                // editTask={editTask}
             />
          ))}
         </div>
@@ -141,7 +156,7 @@ const Project = ({ project, deleteProject, setProjects }: ProjectProps) => {
          <button onClick={() => setShowTaskForm((prev) => !prev)}>
             Add Task
          </button>
-         {showTaskForm && <TaskForm addTask={addTask} />}
+         {showTaskForm && <TaskForm addTask={(task) => addTask(project.id, task)} />}
       </div>
    );
 };

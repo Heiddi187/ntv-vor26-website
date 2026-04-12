@@ -8,4 +8,8 @@ npm install -D @eslint/js @types/node @types/react @types/react-dom @vitejs/plug
 
 npm install -D vitest @testing-library/react @testing-library/jest-dom jsdom
 
+npm install zustand
+
+npm install zod
+
 npm run dev

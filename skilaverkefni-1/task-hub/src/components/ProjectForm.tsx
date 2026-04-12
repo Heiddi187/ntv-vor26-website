@@ -1,10 +1,11 @@
 import { useState } from "react";
 import type { ProjectType } from "./ProjectType";
-import type { TaskType } from "./TaskType";
+// import type { TaskType } from "./TaskType";
 import ProjectInput from "./ProjectInput";
 import SelectInput from "./SelectInput";
 import TextAreaInput from "./TextAreaInput";
-import TaskForm from "./TaskForm";
+// import TaskForm from "./TaskForm";
+import { useProjectStore } from "../store/useProjectStore";
 
 type FormDataType = {
    title: string;
@@ -13,11 +14,14 @@ type FormDataType = {
    // tasks: TaskType[];
 };
 
-type ProjectFormProps = {
-   setProjects: React.Dispatch<React.SetStateAction<ProjectType[]>>;
-};
+// type ProjectFormProps = {
+//    setProjects: React.Dispatch<React.SetStateAction<ProjectType[]>>;
+// };
 
-export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
+
+const ProjectForm = () => {
+   const addProject = useProjectStore((state) => state.addProject)
+   
    const [formData, setFormData] = useState<FormDataType>({
       title: "",
       category: "",
@@ -45,7 +49,8 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
 
       const newProject: ProjectType = { id: Date.now(), ...formData, tasks: [] };
 
-      setProjects((projects) => [newProject, ...projects]);
+      // setProjects((projects) => [newProject, ...projects]);
+      addProject(newProject)
 
       setFormData({
          title: "",

@@ -1,15 +1,21 @@
 import { useState, useEffect } from "react";
 import type { TaskType } from "./TaskType";
 import TaskEditForm from "./TaskEditForm";
+import { useProjectStore } from "../store/useProjectStore";
 
 type TaskProps = {
    task: TaskType;
-   deleteTask: (id: number) => void;
-   taskStatus: (id: number) => void;
-   editTask: (id: number, updatedTask: Partial<TaskType>) => void;
+   projectId: number;
+//    deleteTask: (projectId: number, taskId: number) => void;
+//    toggleTaskStatus: (projectId: number, taskId: number) => void;
+//    editTask: (projectId: number, taskId: number, updates: Partial<TaskType>) => void;
 };
 
-const Task = ({ task, deleteTask, taskStatus, editTask }: TaskProps) => {
+const Task = ({ task, projectId }: TaskProps) => {
+    const deleteTask = useProjectStore((s) => s.deleteTask)
+    const editTask = useProjectStore((s) => s.editTask)
+    const toggleTaskStatus = useProjectStore((s) => s.toggleTaskStatus);
+
    const [isOpen, setIsOpen] = useState(false);
 
    const [isEditing, setIsEditing] = useState(false);
@@ -20,7 +26,7 @@ const Task = ({ task, deleteTask, taskStatus, editTask }: TaskProps) => {
    }, [task]);
 
    const saveEdit = () => {
-      editTask(task.id, editData);
+      editTask(projectId, task.id, editData);
       setIsEditing(false);
    };
 
@@ -49,7 +55,7 @@ const Task = ({ task, deleteTask, taskStatus, editTask }: TaskProps) => {
          }}
       >
          <h3
-            className={`text-lg font-bold ${task.completed ? "line-through" : ""}`}
+            className={`text-lg font-bold text-gray-300 ${task.completed ? "line-through" : ""}`}
          >
             {task.title}
          </h3>
@@ -72,7 +78,7 @@ const Task = ({ task, deleteTask, taskStatus, editTask }: TaskProps) => {
                   className="text-green-500 mt-3"
                   onClick={(e) => {
                      e.stopPropagation();
-                     taskStatus(task.id);
+                     toggleTaskStatus(projectId, task.id);
                   }}
                >
                   {task.completed ? "Undo" : "Completed"}
@@ -95,7 +101,7 @@ const Task = ({ task, deleteTask, taskStatus, editTask }: TaskProps) => {
 
                      if (!confirm("Delete task?")) return;
 
-                     deleteTask(task.id);
+                     deleteTask(projectId, task.id);
                   }}
                >
                   Delete Task

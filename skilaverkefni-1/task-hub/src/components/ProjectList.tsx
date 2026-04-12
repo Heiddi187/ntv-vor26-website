@@ -1,13 +1,17 @@
-import type { ProjectType } from "./ProjectType";
+// import type { ProjectType } from "./ProjectType";
 import Project from "./Project";
+import { useProjectStore } from "../store/useProjectStore";
 
-type ProjectListProps = {
-    projects: ProjectType[]
-    deleteProject: (id: number) => void
-    setProjects: React.Dispatch<React.SetStateAction<ProjectType[]>>
-}
+// type ProjectListProps = {
+//     projects: ProjectType[]
+//     deleteProject: (id: number) => void
+//     // setProjects: React.Dispatch<React.SetStateAction<ProjectType[]>>
+// }
 
-const ProjectsList = ({ projects, deleteProject, setProjects }: ProjectListProps) => {
+const ProjectList = () => {
+    const projects = useProjectStore((state) => state.projects)
+    const deleteProject = useProjectStore((state) => state.deleteProject)
+
     if (projects.length === 0) {
         return (
             <p className="text-center text-gray-500">
@@ -23,11 +27,11 @@ const ProjectsList = ({ projects, deleteProject, setProjects }: ProjectListProps
                     key={project.id}
                     project={project}
                     deleteProject={deleteProject}
-                    setProjects={setProjects}
+                    //setProjects={setProjects}
                 />
             ))}
         </div>
     )
 }
 
-export default ProjectsList;
+export default ProjectList;
