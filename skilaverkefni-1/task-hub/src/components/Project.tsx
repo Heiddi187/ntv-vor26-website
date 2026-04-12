@@ -95,6 +95,11 @@ const Project = ({ project, deleteProject }: ProjectProps) => {
    //          ),
    //       );
    //    };
+   const totalTasks = project.tasks.length;
+
+   const completedTasks = project.tasks.filter((t) => t.completed).length
+
+   const progress = totalTasks === 0 ? 0 : Math.round((completedTasks / totalTasks) * 100);
 
    return (
       <div className="border shadow-lg rounded-lg py-2 px-2">
@@ -105,6 +110,17 @@ const Project = ({ project, deleteProject }: ProjectProps) => {
          <p>
             <strong>Description: </strong> {project.description}
          </p>
+         <div className="mt-3">
+            <p className="text-sm text-gray-600">
+                Tasks: {completedTasks} / {totalTasks} completed ({progress}%)
+            </p>
+            <div className="w-full bg-gray-200 rounded-full h-3 mt-1">
+                <div
+                    className="bg-green-500 h-3 rounded-full transition-all"
+                    style={{ width: `${progress}%`}}
+                />
+            </div>
+         </div>
          <button
             onClick={() => deleteProject(project.id)}
             className="mt-3 text-red-500"
@@ -113,7 +129,6 @@ const Project = ({ project, deleteProject }: ProjectProps) => {
          </button>
 
          <div className="space-y-2 mt-3">
-            {/* 🔍 Search */}
             <input
                placeholder="Search tasks..."
                value={search}
@@ -121,7 +136,6 @@ const Project = ({ project, deleteProject }: ProjectProps) => {
                className="border p-2 w-full"
             />
 
-            {/* 🎯 Priority filter */}
             <select
                value={priorityFilter}
                onChange={(e) => setPriorityFilter(e.target.value as "all" | "low" | "medium" | "high")}
@@ -133,7 +147,6 @@ const Project = ({ project, deleteProject }: ProjectProps) => {
                <option value="high">High</option>
             </select>
 
-            {/* ✅ Status filter */}
             <select
                value={statusFilter}
                onChange={(e) => setStatusFilter(e.target.value as "all" | "active" | "completed")}
