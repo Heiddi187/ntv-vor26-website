@@ -10,7 +10,7 @@ type FormDataType = {
    title: string;
    category: string;
    description: string;
-   tasks: TaskType[];
+   // tasks: TaskType[];
 };
 
 type ProjectFormProps = {
@@ -22,7 +22,7 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
       title: "",
       category: "",
       description: "",
-      tasks: [],
+      // tasks: [],
    });
 
    const [isFormVisible, setIsFormVisible] = useState(false);
@@ -43,7 +43,7 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
 
       if (!formData.title.trim()) return;
 
-      const newProject: ProjectType = { id: Date.now(), ...formData };
+      const newProject: ProjectType = { id: Date.now(), ...formData, tasks: [] };
 
       setProjects((projects) => [newProject, ...projects]);
 
@@ -51,17 +51,17 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
          title: "",
          category: "",
          description: "",
-         tasks: [],
+         // tasks: [],
       });
    };
 
    // adding tasks
-   const setTasks = (task: TaskType) => {
-      setFormData((prev) => ({
-         ...prev,
-         tasks: [task, ...prev.tasks],
-      }));
-   };
+   // const setTasks = (task: TaskType) => {
+   //    setFormData((prev) => ({
+   //       ...prev,
+   //       tasks: [task, ...prev.tasks],
+   //    }));
+   // };
 
    return (
       <>
@@ -96,14 +96,14 @@ export const ProjectForm = ({ setProjects }: ProjectFormProps) => {
                   value={formData.description}
                   onChange={handleChange}
                />
-               <TaskForm setTasks={setTasks} />
+               {/* <TaskForm setTasks={setTasks} />
                <div className="mt-4 space-y-2">
                   {formData.tasks.map((task) => (
                      <div key={task.id} className="border p-2 rounded">
                         {task.title} {task.completed ? "✅" : "❌"}
                      </div>
                   ))}
-               </div>
+               </div> */}
                <button className="w-full bg-blue-400 text-white py-2 rounded-lg cursor-pointer hover:bg-blue-600">
                   Add Project
                </button>

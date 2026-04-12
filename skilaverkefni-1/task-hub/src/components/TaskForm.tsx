@@ -10,10 +10,10 @@ type FormDataType = {
 };
 
 type TaskFormProps = {
-   setTasks: (task: TaskType) => void;
+   addTask: (task: TaskType) => void;
 };
 
-export const TaskForm = ({ setTasks }: TaskFormProps) => {
+export const TaskForm = ({ addTask }: TaskFormProps) => {
    const [formData, setFormData] = useState<FormDataType>({
       title: "",
       priority: "medium",
@@ -48,7 +48,7 @@ export const TaskForm = ({ setTasks }: TaskFormProps) => {
          ...formData
       };
 
-      setTasks(newTask)
+      addTask(newTask)
 
       setFormData({
          title: "",
