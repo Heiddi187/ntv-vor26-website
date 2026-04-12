@@ -3,6 +3,6 @@ export type TaskType = {
     title: string
     priority: "low" | "medium" | "high"
     description?: string
-    assignTo?: string
+    assignedTo?: string
     completed: boolean
 }

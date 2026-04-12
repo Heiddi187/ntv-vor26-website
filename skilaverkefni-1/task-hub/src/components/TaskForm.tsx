@@ -5,8 +5,8 @@ type FormDataType = {
    title: string;
    priority: "low" | "medium" | "high";
    description: string;
-   assignedTo: string
-   completed: boolean
+   assignedTo: string;
+   completed: boolean;
 };
 
 type TaskFormProps = {
@@ -19,7 +19,7 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
       priority: "medium",
       description: "",
       assignedTo: "",
-      completed: false
+      completed: false,
    });
 
    // const [isFormVisible, setIsFormVisible] = useState(true);
@@ -29,12 +29,13 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
          HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
       >,
    ) => {
-        const { name, value, type } = e.target;
+      const { name, value, type } = e.target;
       setFormData({
          ...formData,
-         [name]: type === "checkbox"
-            ? (e.target as HTMLInputElement).checked
-            : value,
+         [name]:
+            type === "checkbox"
+               ? (e.target as HTMLInputElement).checked
+               : value,
       });
    };
 
@@ -42,59 +43,79 @@ export const TaskForm = ({ addTask }: TaskFormProps) => {
       e.preventDefault();
 
       if (!formData.title.trim()) return;
-      
+
       const newTask: TaskType = {
          id: Date.now(),
-         ...formData
+         ...formData,
       };
 
-      addTask(newTask)
+      addTask(newTask);
 
       setFormData({
          title: "",
          priority: "medium",
          description: "",
          assignedTo: "",
-         completed: false
+         completed: false,
       });
    };
 
    return (
       <>
-         
-            <form onSubmit={handleSubmit} className="space-y-2 border p-3 rounded">
-               
-               <input
-                  name="title"
-                  placeholder="task title"
-                  value={formData.title}
+         <form onSubmit={handleSubmit} className="space-y-2 border p-3 rounded">
+            <input
+               name="title"
+               placeholder="task title"
+               value={formData.title}
+               onChange={handleChange}
+               className="border p-2 w-full"
+            />
+
+            <select
+               name="priority"
+               value={formData.priority}
+               onChange={handleChange}
+               className="border p-2 w-full"
+            >
+               <option value="low">Low</option>
+               <option value="medium">Medium</option>
+               <option value="high">High</option>
+            </select>
+
+            <textarea 
+               name="description"
+               placeholder="Description"
+               value={formData.description}
+               onChange={handleChange}
+               className="border p-2 w-full"
+            />
+
+            <input 
+               name="assignedTo"
+               placeholder="Assigned to"
+               value={formData.assignedTo}
+               onChange={handleChange}
+               className="border p-2 w-full"
+            />   
+            completed:
+            <label className="flex items-center gap-2">
+               <input 
+                  type="checkbox" 
+                  name="completed"
+                  checked={formData.completed}
                   onChange={handleChange}
-                  className="border p-2 w-full"
                />
-               <select
-                  name="category"
-                  value={formData.priority}
-                  onChange={handleChange}
-                  className="border p-2 w-full"
-                  >
-                     <option value="low">Low</option>
-                     <option value="medium">Medium</option>
-                     <option value="high">High</option>
-                  </select>
-               {/* <TextAreaInput
-                  label="Description"
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-               /> */}
-               description?: 
-               assignTo?: 
-               completed: 
-               <button disabled={!formData.title.trim()} className="bg-blue-500 text-white px-3 py-1 rounded" type="submit">
-                  Add Task
-               </button>
-            </form>
-        
+               Completed
+            </label>
+            
+            <button
+               disabled={!formData.title.trim()}
+               className="bg-blue-500 text-white px-3 py-1 rounded"
+               type="submit"
+            >
+               Add Task
+            </button>
+         </form>
       </>
    );
 };
