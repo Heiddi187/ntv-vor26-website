@@ -12,7 +12,7 @@ export function Counter() {
         Teljari
       </h2>
       <p className="text-sm">
-        Gildi: <strong aria-live="polite">{count}</strong>
+        Gildi: <strong aria-live="polite" role='status'>{count}</strong>
       </p>
       <div className="flex flex-wrap gap-2">
         <button
