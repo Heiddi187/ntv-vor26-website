@@ -1,5 +1,5 @@
 // use mock to test because we don't have the api key
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { vi, it, expect } from "vitest";
 import { QuoteCard } from "./QuoteCard";
@@ -35,7 +35,21 @@ it("should show loading state when button is clicked", async () => {
    expect(screen.getByRole("button")).toHaveTextContent("Sæki…");
 });
 
-it.todo("should disable button while loading", async () => {});
+it("should disable button while loading", async () => {
+   vi.spyOn(quotesApi, "fetchRandomQuote").mockImplementation(
+      () =>
+         new Promise((resolve) => setTimeout(() => resolve("test quote"), 100)),
+   );
+
+   const user = userEvent.setup();
+   render(<QuoteCard />);
+
+   const button = screen.getByRole("button", { name: "Sækja quote" });
+   await user.click(button);
+
+   expect(button).toBeDisabled();
+   //expect(await screen.findByRole('button')).toBeDisabled();
+});
 
 it("should display quote when API call succeeds", async () => {
    vi.spyOn(quotesApi, "fetchRandomQuote").mockResolvedValue("hello");
@@ -48,7 +62,22 @@ it("should display quote when API call succeeds", async () => {
    expect(await screen.findByRole("status")).toHaveTextContent("hello");
 });
 
-it.todo("should hide loading state after successful fetch", async () => {});
+it("should hide loading state after successful fetch", async () => {
+   vi.spyOn(quotesApi, "fetchRandomQuote").mockImplementation(
+      () =>
+         new Promise((resolve) => setTimeout(() => resolve("test quote"), 100)),
+   );
+
+   const user = userEvent.setup();
+   render(<QuoteCard />);
+
+   const button = screen.getByRole("button", { name: "Sækja quote" });
+   await user.click(button);
+
+   expect(button).toHaveTextContent('Sæki…');
+   await screen.findByText('test quote');
+   expect(button).toHaveTextContent('Sækja quote');
+});
 
 it("should display error message when API call fails", async () => {
    vi.spyOn(quotesApi, "fetchRandomQuote").mockRejectedValue(new Error());
@@ -61,6 +90,45 @@ it("should display error message when API call fails", async () => {
    expect (await screen.findByRole('alert')).toBeInTheDocument();
 });
 
-it.todo("should hide loading state after failed fetch", async () => {});
+it("should hide loading state after failed fetch", async () => {
+   vi.spyOn(quotesApi, "fetchRandomQuote").mockRejectedValue(new Error());
 
-it.todo("should clear previous quote when fetching a new one", async () => {});
+   const user = userEvent.setup();
+   render(<QuoteCard />);
+
+   const button = screen.getByRole("button", { name: "Sækja quote" });
+   await user.click(button);
+
+   expect(await screen.findByRole('alert')).toBeInTheDocument();
+   
+   //expect(button).toHaveTextContent('Sækja quote');   -- betra að nota waitFor
+   await waitFor(() => {
+      expect(button).toHaveTextContent('Sækja quote')
+   })
+});
+
+it("should clear previous quote when fetching a new one", async () => {
+   vi.spyOn(quotesApi, "fetchRandomQuote")
+      .mockResolvedValueOnce("hello")
+      .mockResolvedValueOnce("welcome");
+
+   const user = userEvent.setup();
+   render(<QuoteCard />);
+
+   const button = screen.getByRole('button', { name: 'Sækja quote' });
+
+   await user.click(button);
+   expect(await screen.findByText('hello')).toBeInTheDocument();
+
+   await user.click(button);
+   expect(screen.queryByText('hello')).not.toBeInTheDocument();
+   expect(await screen.findByText('welcome')).toBeInTheDocument();
+
+   // þetta er ekki nógu gott...
+   // await user.click(screen.getByRole("button", { name: "Sækja quote" }));
+
+   // vi.spyOn(quotesApi, "fetchRandomQuote")
+   // await user.click(screen.getByRole("button", { name: "Sækja quote" }));
+   // expect(await screen.findByRole("status")).not.toHaveTextContent("hello");
+   // expect(await screen.findByRole("status")).toHaveTextContent("welcome");
+});
