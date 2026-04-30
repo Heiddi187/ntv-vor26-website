@@ -26,9 +26,9 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     task: {
-      id: '1',
-      title: 'Test Task',
-      state: 'TASK_INBOX',
+      "id": "2",
+      "title": "Test Task",
+      "state": "TASK_INBOX"
     },
   },
 };
