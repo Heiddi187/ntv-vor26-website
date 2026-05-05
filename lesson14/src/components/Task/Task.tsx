@@ -1,12 +1,12 @@
 import './Task.css';
 
-type TaskData = {
+export type TaskData = {
   id: string;
   title: string;
   state: 'TASK_ARCHIVED' | 'TASK_INBOX' | 'TASK_PINNED';
 };
 
-type TaskProps = {
+export type TaskProps = {
   /** Composition of the task */
   task: TaskData;
   /** Event to change the task to archived */
@@ -37,6 +37,7 @@ export default function Task({
         <span className="checkbox-custom" onClick={() => onArchiveTask(id)} />
       </label>
 
+      {/* fyrst í docs */}
       <label htmlFor={`title-${id}`} aria-label={title} className="title">
         <input
           type="text"
@@ -47,6 +48,8 @@ export default function Task({
           placeholder="Input title"
         />
       </label>
+      {/* endar hér */}
+
       {state !== 'TASK_ARCHIVED' && (
         <button
           className="pin-button"

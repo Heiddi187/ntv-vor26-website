@@ -1,15 +1,18 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 
 import { Button } from "./2ndButton";
+import { fn } from "storybook/test";
 
 const meta = {
    title: "Components/2ndButton",
    component: Button,
-
+   // tags býr til docs í storybook
+   tags: ['autodocs'],
    args: {
       children: "Click here",
       variant: "primary",
       size: "md",
+      onClick: fn()
    },
 
    argTypes: {
@@ -21,9 +24,9 @@ const meta = {
          control: "radio",
          options: ["sm", "md", "lg"],
       },
-      onClick: {
-         action: "clicked",
-      },
+      // onClick: {
+      //    action: "clickety click",
+      // },
    },
 } satisfies Meta<typeof Button>;
 
@@ -37,6 +40,7 @@ export const Default: Story = {
       variant: "primary",
       size: "md",
    },
+   
 };
 
 export const Large: Story = {

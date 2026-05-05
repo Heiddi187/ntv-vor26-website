@@ -1,8 +1,16 @@
 import { Counter } from '@/components/Counter/Counter';
 import { Greeting } from '@/components/Greeting/Greeting';
 import { QuoteCard } from '@/components/Quote/QuoteCard';
+import Task, { type TaskData } from '@/components/Task/Task';
+import { useState } from 'react';
 
 export function IndexPage() {
+  const [task, setTask] = useState<TaskData>({
+    id: '1',
+    title: 'Learning stuff',
+    state: 'TASK_INBOX' as const
+  });
+
   return (
     <div className="mx-auto max-w-lg space-y-6 text-left">
       <header>
@@ -37,6 +45,25 @@ export function IndexPage() {
       <Counter />
       <Greeting />
       <QuoteCard />
+      <Task 
+        task={task}
+        onArchiveTask={(id) => 
+          setTask((t) => ({ 
+            ...t, 
+            state: t.state === 'TASK_ARCHIVED'
+              ? 'TASK_INBOX'
+              : 'TASK_ARCHIVED'
+          }))
+        }
+        onPinTask={(id) =>
+          setTask((t) => ({ 
+            ...t, 
+            state: t.state === 'TASK_PINNED'
+              ? 'TASK_INBOX' 
+              : 'TASK_PINNED'
+          }))
+        }
+      />
     </div>
   );
 }

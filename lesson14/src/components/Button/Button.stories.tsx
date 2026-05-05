@@ -4,6 +4,7 @@ import Button from "./Button";
 const meta: Meta<typeof Button> = {
   title: "Components/Button",
   component: Button,
+  tags: ['autodocs']
 };
 
 export default meta;
@@ -109,7 +110,7 @@ export const ClickableSecondary: Story = {
   args: {
     label: "Click Secondary",
     variant: "secondary",
-    onClick: () => console.log("Secondary clicked"),
+    onClick: () => alert("Secondary clicked"),
   },
 };
 
