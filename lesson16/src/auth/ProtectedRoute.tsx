@@ -12,7 +12,7 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
     if (!isAuthed) {
         return (
             <Navigate 
-                to='/login' 
+                to='/' 
                 replace 
                 state={{ from: location }} 
             />

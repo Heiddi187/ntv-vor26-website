@@ -2,6 +2,7 @@
 // import type { ReactNode } from 'react';
 import { useAuth } from "@/auth/useAuth";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import { Show, SignInButton, SignUpButton, UserButton } from "@clerk/react";
 
 // type LayoutProps = {
 //   activePage: AppPage;
@@ -28,7 +29,7 @@ export function Layout() {
 
    function handleLogout() {
       logout();
-      navigate('/');
+      navigate("/");
    }
 
    return (
@@ -80,12 +81,25 @@ export function Layout() {
                         className={navButtonClassName(isActive("/login"))}
                         onClick={() => navigate("/login")}
                      >
-                        Login
+                        Simple Login
                      </button>
                   )}
+
+                  <>
+                     <header>
+                        <Show when="signed-out">
+                           <SignInButton />
+                           <SignUpButton />
+                        </Show>
+                        <Show when="signed-in">
+                           <UserButton />
+                        </Show>
+                     </header>
+                  </>
                </nav>
             </div>
          </header>
+
          <main className="mx-auto w-full max-w-6xl px-4 py-8">
             <Outlet />
          </main>

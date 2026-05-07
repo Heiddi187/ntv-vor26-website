@@ -10,24 +10,26 @@ import { ProtectedRoute } from "./auth/ProtectedRoute";
 import { MemberWelcomePage } from "./pages/MemberWelcomePage";
 
 function App() {
-  //  const [page, setPage] = useState<AppPage>("home");
+   //  const [page, setPage] = useState<AppPage>("home");
 
    return (
-      <Routes>
-         <Route path="/" element={<Layout />} >
-            <Route index element={<HomePage/>} />
-            <Route path="about" element={<AboutPage />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route
-              path="welcome"
-              element={
-                <ProtectedRoute>
-                  <MemberWelcomePage />
-                </ProtectedRoute>
-              } 
-            />
-         </Route>
-      </Routes>
+      <>
+         <Routes>
+            <Route path="/" element={<Layout />}>
+               <Route index element={<HomePage />} />
+               <Route path="about" element={<AboutPage />} />
+               <Route path="login" element={<LoginPage />} />
+               <Route
+                  path="welcome"
+                  element={
+                     <ProtectedRoute>
+                        <MemberWelcomePage />
+                     </ProtectedRoute>
+                  }
+               />
+            </Route>
+         </Routes>
+      </>
    );
 }
 
