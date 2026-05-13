@@ -14,13 +14,13 @@ function ProjectCard({ project }: { project: Project }) {
       }}
     >
       <CardContent>
-        <h3 className="text-lg font-semibold" key={project.id}>
+        <h3 className="text-lg font-semibold">
           {project.name}
         </h3>
-        <p className="text-sm text-muted-foreground" key={project.id}>
+        <p className="text-sm text-muted-foreground">
           {project.description}
         </p>
-        <span className="text-sm text-muted-foreground" key={project.id}>
+        <span className="text-sm text-muted-foreground">
           {project.tasksCount} tasks
         </span>
       </CardContent>

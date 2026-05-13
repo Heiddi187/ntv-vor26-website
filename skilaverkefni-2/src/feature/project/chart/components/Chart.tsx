@@ -64,8 +64,9 @@ export function ProjectTasksChart() {
           </p>
         ) : (
           <ChartContainer
+            data-testid='tasks-chart'
             config={chartConfig}
-            className="mx-auto aspect-square max-h-[250px]"
+            className="mx-auto aspect-square max-h-62.5"
           >
             <PieChart>
               <ChartTooltip
