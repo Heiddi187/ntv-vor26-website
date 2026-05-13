@@ -69,19 +69,64 @@ describe("ProjectCard tests", () => {
       // Test fann að það voru óþarfa keys á CardContent-inu
    });
 
-   it.todo("should call removeProject when delete button is clicked", async () => {
+   it("should call removeProject when delete button is clicked", async () => {
+      const user = userEvent.setup();
+      const removeProject = vi.fn();
+      
+      vi.mocked(useGlobalContext).mockReturnValue({
+         removeProject,
+         setActiveProject: vi.fn(),
+      } as any);
 
+      render (<ProjectCard project={mockProject}/>);
+
+      await user.click(screen.getByTestId('remove-project-button'));
+
+      expect(removeProject).toHaveBeenCalled()
    });
 
-   it.todo("should call removeProject with correct project id", async () => {
+   it("should call removeProject with correct project id", async () => {
+      const user = userEvent.setup();
+      const removeProject = vi.fn();
+      
+      vi.mocked(useGlobalContext).mockReturnValue({
+         removeProject,
+         setActiveProject: vi.fn(),
+      } as any);
 
+      render (<ProjectCard project={mockProject}/>);
+
+      await user.click(screen.getByTestId('remove-project-button'));
+
+      expect(removeProject).toHaveBeenCalledWith(mockProject.id)
    });
 
-   it.todo("should not call setActiveProject when delete button is clicked", async () => {
+   it("should not call setActiveProject when delete button is clicked", async () => {
+      const user = userEvent.setup();
+      const setActiveProject = vi.fn();
+      
+      vi.mocked(useGlobalContext).mockReturnValue({
+         removeProject: vi.fn(),
+         setActiveProject,
+      } as any);
 
+      render (<ProjectCard project={mockProject}/>);
+
+      await user.click(screen.getByTestId('remove-project-button'));
+
+      expect(setActiveProject).not.toHaveBeenCalled()
    });
 
-   it.todo("should render delete button", async () => {
+   it("should render delete button", async () => {
+      const removeProject = vi.fn();
+      
+      vi.mocked(useGlobalContext).mockReturnValue({
+         removeProject,
+         setActiveProject: vi.fn(),
+      } as any);
 
+      render (<ProjectCard project={mockProject}/>);
+
+      expect(screen.getByTestId('remove-project-button')).toBeInTheDocument()
    });
 });

@@ -12,6 +12,7 @@ function ProjectCard({ project }: { project: Project }) {
       onClick={() => {
         setActiveProject(project);
       }}
+      data-testid='project-card'
     >
       <CardContent>
         <h3 className="text-lg font-semibold">
@@ -26,6 +27,7 @@ function ProjectCard({ project }: { project: Project }) {
       </CardContent>
       <CardFooter className="flex justify-end">
         <Button
+          data-testid='remove-project-button'
           type="button"
           variant="ghost"
           size="icon"
