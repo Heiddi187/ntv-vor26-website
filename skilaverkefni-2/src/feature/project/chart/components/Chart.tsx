@@ -64,7 +64,7 @@ export function ProjectTasksChart() {
           </p>
         ) : (
           <ChartContainer
-            data-testid='tasks-chart'
+            data-testid='tasks-chart' // bætti við fyrir testing purposes
             config={chartConfig}
             className="mx-auto aspect-square max-h-62.5"
           >
