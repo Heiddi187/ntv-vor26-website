@@ -1,4 +1,4 @@
-name: CI.skilaverk
+name: CI-skilaverk
 
 on:
   push:
