@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
-import tsconfigPaths from 'vite-tsconfig-paths'
+import tsconfigPaths from "vite-tsconfig-paths";
 // import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 // import { playwright } from '@vitest/browser-playwright';
 const dirname =
@@ -29,7 +29,13 @@ export default defineConfig({
       environment: "jsdom",
       setupFiles: "./vitest.setup.ts",
 
-      exclude: ["**/*.stories.*", "**/.storybook/**", "**/node_modules/**", "lesson*/**", "solutions/**"],
+      exclude: [
+         "**/*.stories.*",
+         "**/.storybook/**",
+         "**/node_modules/**",
+         "lesson*/**",
+         "solutions/**",
+      ],
    },
 
    //  plugins: [react(), tailwindcss()],
